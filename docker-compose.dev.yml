@@ -1,0 +1,103 @@
+# Development override for docker-compose.yml
+# Use with: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+version: '3.8'
+
+services:
+  web:
+    build:
+      target: builder  # Use builder stage for development
+    environment:
+      - WOLFPY_ENV=development
+      - DEBUG=True
+      - GUNICORN_WORKERS=1
+      - GUNICORN_LOG_LEVEL=debug
+    volumes:
+      # Mount source code for live reloading
+      - ./src:/app/src
+      - ./templates:/app/templates
+      - ./static:/app/static
+      - ./examples:/app/examples
+      - ./tests:/app/tests
+    command: ["python", "-m", "wolfpy", "run", "--host", "0.0.0.0", "--port", "8000", "--debug"]
+    ports:
+      - "8000:8000"
+      - "5678:5678"  # Debug port
+    stdin_open: true
+    tty: true
+
+  # Development database with exposed port
+  postgres:
+    environment:
+      - POSTGRES_DB=wolfpy_dev
+      - POSTGRES_USER=dev
+      - POSTGRES_PASSWORD=dev
+    ports:
+      - "5433:5432"  # Different port to avoid conflicts
+
+  # Redis with different port for development
+  redis:
+    ports:
+      - "6380:6379"  # Different port to avoid conflicts
+
+  # Hot reload file watcher (optional)
+  watcher:
+    image: node:alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: >
+      sh -c "
+        npm install -g nodemon &&
+        nodemon --watch src --watch templates --ext py,html,css,js --exec 'echo File changed, restart your app'
+      "
+    profiles:
+      - dev-tools
+
+  # Development tools container
+  dev-tools:
+    build:
+      context: .
+      target: builder
+    volumes:
+      - .:/app
+      - /app/.venv  # Exclude venv from mount
+    working_dir: /app
+    command: tail -f /dev/null  # Keep container running
+    environment:
+      - WOLFPY_ENV=development
+      - DEBUG=True
+    profiles:
+      - dev-tools
+
+  # Test runner
+  test:
+    build:
+      context: .
+      target: builder
+    volumes:
+      - .:/app
+      - /app/.venv
+    working_dir: /app
+    environment:
+      - WOLFPY_ENV=test
+      - DATABASE_URL=sqlite:///test.db
+    command: ["python", "-m", "pytest", "-v", "--cov=wolfpy"]
+    profiles:
+      - testing
+
+  # Documentation server
+  docs:
+    image: python:3.11-slim
+    volumes:
+      - ./docs:/docs
+    working_dir: /docs
+    ports:
+      - "8080:8080"
+    command: >
+      sh -c "
+        pip install mkdocs mkdocs-material &&
+        mkdocs serve --dev-addr 0.0.0.0:8080
+      "
+    profiles:
+      - docs
