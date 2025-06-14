@@ -1,5 +1,7 @@
 # Getting Started with WolfPy
 
+![WolfPy Getting Started](images/wolfpy-quickstart.png)
+
 Welcome to WolfPy! This guide will help you get up and running with the WolfPy web framework in just a few minutes.
 
 ## 📋 Prerequisites
@@ -36,6 +38,8 @@ wolfpy --version
 You should see the WolfPy version information.
 
 ## 🏗️ Create Your First Project
+
+![WolfPy Project Structure](images/wolfpy-architecture.png)
 
 ### Using the CLI
 

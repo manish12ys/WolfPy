@@ -1,5 +1,7 @@
 # WolfPy Framework Documentation
 
+![WolfPy Framework](images/wolfpy-logo.png)
+
 Welcome to the comprehensive documentation for the WolfPy web framework! 🐺
 
 WolfPy is a lightweight, modular Python web framework built from scratch with a focus on simplicity, performance, and extensibility.
@@ -26,6 +28,7 @@ python app.py
 
 - **[User Guide](user-guide.md)** - Complete guide to using WolfPy
 - **[Quick Reference](quick-reference.md)** - Cheat sheet for common tasks
+- **[Visual Guide](visual-guide.md)** - Visual documentation and diagrams
 - [Getting Started](getting-started.md) - Installation and basic setup
 
 ### 🔧 Development
@@ -40,6 +43,8 @@ python app.py
 - **[Production Checklist](production-checklist.md)** - Pre-launch checklist
 
 ## ✨ Key Features
+
+![WolfPy Features Overview](images/wolfpy-features.png)
 
 ### 🛣️ Simple Routing
 ```python
@@ -116,6 +121,8 @@ def create_user(request):
 ```
 
 ## 🏗️ Architecture
+
+![WolfPy Architecture](images/wolfpy-architecture.png)
 
 WolfPy follows a modular architecture with clear separation of concerns:
 

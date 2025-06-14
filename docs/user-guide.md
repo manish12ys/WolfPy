@@ -1,5 +1,7 @@
 # 🐺 WolfPy Framework - User Guide
 
+![WolfPy Framework](images/wolfpy-logo.png)
+
 WolfPy is a modern, modular Python web framework with built-in admin, real-time support, and production-ready deployment features.
 
 ## 🚀 Quick Start
@@ -50,6 +52,8 @@ python app.py
 Visit `http://localhost:8000` to see your app!
 
 ## 📖 Core Features
+
+![WolfPy Core Features](images/wolfpy-features.png)
 
 ### 1. Routing
 

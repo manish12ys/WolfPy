@@ -1,5 +1,7 @@
 # API Framework
 
+![WolfPy API Framework](images/wolfpy-features.png)
+
 WolfPy includes a powerful API framework for building RESTful web services. The API framework provides automatic JSON serialization, request validation, response formatting, and comprehensive documentation generation.
 
 ## 🚀 Quick Start
